@@ -4,11 +4,12 @@ import SignupPage from '@/components/SignUpPage.vue';
 import DashboardPage from '@/components/DashboardPage.vue';
 
 const routes = [
-  // Redirect root path to /login
+  // Default root redirects to login
   {
     path: '/',
     redirect: '/login'
   },
+  // Auth routes
   {
     path: '/login',
     name: 'Login',
@@ -19,14 +20,15 @@ const routes = [
     name: 'Signup',
     component: SignupPage,
   },
+  // Main app
   {
     path: '/dashboard',
     name: 'Dashboard',
     component: DashboardPage,
   },
-  // Catch-all route (optional) to redirect unknown URLs to login
+  // Catch-all for unknown routes: redirect to /login
   {
-    path: '/:catchAll(.*)',
+    path: '/:pathMatch(.*)*', // Vue 3 recommended syntax
     redirect: '/login'
   }
 ];
