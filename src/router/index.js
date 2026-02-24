@@ -4,12 +4,10 @@ import SignupPage from '@/components/SignUpPage.vue';
 import DashboardPage from '@/components/DashboardPage.vue';
 
 const routes = [
-  // Default root redirects to login
   {
     path: '/',
     redirect: '/login'
   },
-  // Auth routes
   {
     path: '/login',
     name: 'Login',
@@ -20,15 +18,14 @@ const routes = [
     name: 'Signup',
     component: SignupPage,
   },
-  // Main app
   {
     path: '/dashboard',
     name: 'Dashboard',
     component: DashboardPage,
+    meta: { requiresAuth: true }   // 🔐 protected
   },
-  // Catch-all for unknown routes: redirect to /login
   {
-    path: '/:pathMatch(.*)*', // Vue 3 recommended syntax
+    path: '/:pathMatch(.*)*',
     redirect: '/login'
   }
 ];
@@ -36,6 +33,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+// 🔥 AUTH GUARD
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next({ name: "Login" }); // block dashboard
+  } else {
+    next(); // allow navigation
+  }
 });
 
 export default router;

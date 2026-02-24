@@ -169,17 +169,17 @@ methods: {
         return;
       }
     }
+// Login success
+this.toastMessage = "Login successful!";
+this.showToast = true;
 
-    // Login success
-    this.toastMessage = "Login successful!";
-    this.showToast = true;
+// SAVE LOGIN STATE
+localStorage.setItem("isAuthenticated", "true");
 
-    // Show toast briefly, then redirect to dashboard
-    setTimeout(() => {
-      this.showToast = false;
-      // Redirect to dashboard (make sure route name or path exists)
-      this.$router.push({ name: "Dashboard" }); 
-    }, 1000); // 1 second delay to show toast
+setTimeout(() => {
+  this.showToast = false;
+  this.$router.push({ name: "Dashboard" });
+}, 1000); // 1 second delay to show toast
   },
 
     // Typewriter effect
